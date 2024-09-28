@@ -1,21 +1,30 @@
 import time
-from os import walk
+import os
+import glob
+
+
+def delete_old_file(video_dir, delay=0):
+    while True:
+        # Get all files in the directory and their full paths
+        files = glob.glob(os.path.join(video_dir, "*"))
+
+        # Ensure the directory is not empty
+        if files:
+            # Find the oldest file by modification time
+            oldest_file = min(files, key=os.path.getmtime)
+
+            # Print the file that will be deleted
+            print(f"Deleting the oldest file: {oldest_file}")
+
+            # Delete the file
+            os.remove(oldest_file)
+
+        else:
+            print("No files found in the directory.")
+
+        time.sleep(delay)
 
 
 if __name__ == "__main__":
-    # loop infinite and and then sleep for 4 seconds
-    while True:
-        print("[log]: loop started")
-
-        # put all filesnames in directory "videos/: into a list
-        filenames = next(walk("videos/"), (None, None, []))[2]  # [] if no file
-
-        # if filenames is not empty do something if empty contineu
-        if not filenames:
-            print("[log]: no files in filename")
-        else:
-            print(filenames)
-            break
-
-        time.sleep(4)
-    print("yo")
+    video_dir = "videos/"
+    delete_old_file(video_dir, 4)
