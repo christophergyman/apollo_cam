@@ -27,4 +27,4 @@ def delete_old_file(video_dir, delay=0):
 
 if __name__ == "__main__":
     video_dir = "videos/"
-    delete_old_file(video_dir, 4)
+    delete_old_file(video_dir, 7)
